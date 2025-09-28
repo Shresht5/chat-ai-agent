@@ -1,16 +1,94 @@
-# React + Vite
+🤖 My Personal AI Agent
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React-based chatbot powered by the OpenRouter
+ API.
+This project demonstrates how to send and receive chat messages with free AI models such as DeepSeek.
 
-Currently, two official plugins are available:
+✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+💬 Chat with an AI agent in real-time
 
-## React Compiler
+📜 Messages displayed in a scrollable container (vertical only)
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+⌨️ Input field with submit button
 
-## Expanding the ESLint configuration
+⏳ “AI is typing…” indicator while waiting for a response
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🔑 Uses OpenRouter
+ to access free/paid models
+
+🚀 Getting Started
+1. Clone the repository
+git clone https://github.com/your-username/ai-agent-react.git
+cd ai-agent-react
+
+2. Install dependencies
+npm install
+
+3. Get an OpenRouter API key
+
+Go to OpenRouter.ai
+.
+
+Generate a free API key.
+
+Copy it.
+
+4. Set up environment variables
+
+Create a .env file in the root of your project:
+
+REACT_APP_OPENROUTER_API_KEY=sk-or-v1-xxxxxxxxxxxxxxxxxx
+
+
+⚠️ Important: Never hardcode your key in React code (it will be visible in DevTools). For production apps, use a backend server to keep the key secure.
+
+5. Update the API call
+
+In App.jsx, replace the header with:
+
+"Authorization": `Bearer ${process.env.REACT_APP_OPENROUTER_API_KEY}`,
+
+
+And make sure you’re using a valid model slug (for free models, try deepseek/deepseek-chat:free).
+
+6. Start the app
+npm start
+
+
+Open http://localhost:3000
+ to see it in action.
+
+📂 Project Structure
+/src
+ └── App.jsx        # Main React component with chat logic
+ └── index.js       # Entry point
+.env                # Stores API key
+package.json        # Dependencies and scripts
+README.md           # Documentation
+
+🛠 How It Works
+
+User enters a message in the input box.
+
+sendMessage() sends the message + conversation history to OpenRouter’s /chat/completions endpoint.
+
+API responds with the AI’s reply.
+
+The reply is added to messages state and displayed in the chat box.
+
+UI updates automatically with React re-render.
+
+🖥 Example
+You: Hello!
+AI: Hi there! How can I help you today?
+
+⚡ Improvements (Future Roadmap)
+
+✅ Auto-scroll to latest message
+
+✅ Better UI with Tailwind or Material UI
+
+✅ Store chat history in localStorage
+
+✅ Add backend proxy for secure API key usage
