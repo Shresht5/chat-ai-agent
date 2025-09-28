@@ -18,7 +18,7 @@ function App() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer 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`, // keep key safe in .env
+          "Authorization": `Bearer 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`, // keep key safe in .env
         },
         body: JSON.stringify({
           model: "deepseek/deepseek-chat-v3.1:free", // use a valid free model
@@ -27,6 +27,7 @@ function App() {
       });
 
       const data = await res.json();
+      console.log(data);
       if (data.choices && data.choices.length > 0) {
         const reply = data.choices[0].message;
         setMessages([...messages, newMessage, { role: reply.role, content: reply.content }]);
@@ -39,29 +40,113 @@ function App() {
   };
 
   return (
-    <div style={{ maxWidth: "600px", margin: "0px auto", fontFamily: "Arial", height: "calc(100vh-100px)" }}>
-      <h2>🤖 My Personal AI Agent</h2>
-      <div style={{ border: "1px solid #ccc", padding: "10px", height: "75vh", overflowY: "scroll" }}>
+    <div
+      style={{
+        maxWidth: "700px",
+        margin: "20px auto",
+        fontFamily: "Arial, sans-serif",
+        display: "flex",
+        flexDirection: "column",
+        height: "90vh",
+        border: "1px solid #e0e0e0",
+        borderRadius: "12px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+        overflow: "hidden",
+      }}
+    >
+      {/* Header */}
+      <div
+        style={{
+          background: "linear-gradient(135deg, #cb19eaff, #2d57ccff)",
+          color: "white",
+          padding: "16px",
+          textAlign: "center",
+          fontSize: "20px",
+          fontWeight: "bold",
+        }}
+      >
+        🤖 My Personal AI Agent
+      </div>
+
+      {/* Chat Box */}
+      <div
+        style={{
+          flex: 1,
+          padding: "15px",
+          background: "#f9f9f9",
+          overflowY: "auto",
+        }}
+      >
         {messages.map((msg, i) => (
-          <div key={i} style={{ margin: "8px 0" }}>
-            <b>{msg.role === "user" ? "You" : "AI"}:</b> {msg.content}
+          <div
+            key={i}
+            style={{
+              margin: "10px 0",
+              display: "flex",
+              justifyContent: msg.role === "user" ? "flex-end" : "flex-start",
+            }}
+          >
+            <div
+              style={{
+                maxWidth: "75%",
+                padding: "10px 14px",
+                borderRadius: "18px",
+                background: msg.role === "user" ? " #2d57ccff" : " #cb19eaff",
+                color: msg.role === "user" ? "white" : "white",
+                fontSize: "14px",
+                lineHeight: "1.4",
+              }}
+            >
+              <b>{msg.role === "user" ? "You" : "AI"}:</b> {msg.content}
+            </div>
           </div>
         ))}
-        {loading && <p>AI is typing...</p>}
+        {loading && (
+          <p style={{ fontStyle: "italic", color: "#777" }}>AI is typing...</p>
+        )}
       </div>
-      <form onSubmit={sendMessage} style={{ marginTop: "10px" }}>
+
+      {/* Input Box */}
+      <form
+        onSubmit={sendMessage}
+        style={{
+          display: "flex",
+          borderTop: "1px solid #ddd",
+          padding: "10px",
+          background: "linear-gradient(135deg, #cb19eaff, #2d57ccff)",
+        }}
+      >
         <input
           name="input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          style={{ width: "80%", padding: "8px" }}
+          style={{
+            flex: 1,
+            padding: "10px 14px",
+            border: "1px solid #ccc",
+            borderRadius: "20px",
+            outline: "none",
+            fontSize: "14px",
+          }}
           placeholder="Type your message..."
         />
-        <button type="submit" style={{ padding: "8px 12px", marginLeft: "5px" }}>
+        <button
+          type="submit"
+          style={{
+            padding: "7px 15px",
+            marginLeft: "8px",
+            border: "solid white 3px ",
+            borderRadius: "20px",
+            background: "linear-gradient(135deg, #cb19eaff, #2d57ccff)",
+            color: "white",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
           Send
         </button>
       </form>
-    </div >
+    </div>
   );
 }
 
