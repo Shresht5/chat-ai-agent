@@ -18,7 +18,7 @@ function App() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer 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`, // keep key safe in .env
+          "Authorization": `Bearer ${import.meta.env.VITE_API_SECRET_KEY}`, // keep key safe in .env
         },
         body: JSON.stringify({
           model: "deepseek/deepseek-chat-v3.1:free", // use a valid free model
