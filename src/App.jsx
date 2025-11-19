@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './App.css'
 import Header from "./component/Header";
 import Loader from "./component/Loader";
@@ -7,6 +7,8 @@ import InputBar from "./component/InputBar";
 function App() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const messagesEndRef = useRef(null);
 
   function messageInput(input) {
     sendMessage(input)
@@ -57,6 +59,11 @@ function App() {
     }
   };
 
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <div className="relative bg-[#151f27] min-h-screen flex flex-col">
       <Header />
@@ -81,6 +88,7 @@ function App() {
         {loading && (
           <Loader />
         )}
+        <div ref={messagesEndRef} />
       </div>
       <div className="sticky bottom-0">
         <InputBar messageInput={messageInput} />
