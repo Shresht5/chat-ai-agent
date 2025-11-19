@@ -1,0 +1,33 @@
+.chatbox {
+    flex: 1;
+    padding: 15px;
+    background: #f9f9f9;
+    overflow-y: auto;
+}
+
+.message {
+    margin: 10px 0;
+    display: flex;
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.message.ai {
+    justify-content: flex-start;
+}
+
+.messagebubble {
+
+    padding: 7px 14px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: white;
+}
+
+.messagebubble.user {
+    background: #403d55;
+    max-width: 75%;
+}
