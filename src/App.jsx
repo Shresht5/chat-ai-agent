@@ -37,7 +37,7 @@ function App() {
           "Authorization": `Bearer ${import.meta.env.VITE_API_SECRET_KEY}`,
         },
         body: JSON.stringify({
-          model: "deepseek/deepseek-r1-distill-llama-70b:free",
+          model: "tngtech/deepseek-r1t2-chimera:free",
           messages: updatedMessages,
         }),
       });
@@ -72,7 +72,7 @@ function App() {
         {messages.map((msg, i) => (
           <div className={`message ${msg.role === "user" ? "user" : "ai"}`} key={i}>
             <div className={`messagebubble ${msg.role === "user" ? "user" : "ai"}`}>
-              <pre className="whitespace-pre-wrap">{msg.content.replace(/<\｜begin▁of▁sentence｜>/g, "")
+              <pre className="whitespace-pre-wrap break-words">{msg.content.replace(/<\｜begin▁of▁sentence｜>/g, "")
                 .replace(/<\|endoftext\|>/g, "")
                 // .replace(/\s+/g, " ")
                 .replace(/###\s*/g, "\n\n")

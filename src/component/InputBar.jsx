@@ -1,7 +1,26 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 const inputBar = ({ messageInput }) => {
     const [input, setInput] = useState("");
+    const inputarea = useRef(null);
+
+    const handleChange = (e) => {
+        setInput(e.target.value);
+
+        inputarea.current.style.height = "auto";
+        inputarea.current.style.height = inputarea.current.scrollHeight + "px";
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            if (e.shiftKey) {
+                return;
+            } else {
+                e.preventDefault();
+                submit(e);
+            }
+        }
+    };
 
     function submit(e) {
         e.preventDefault()
@@ -9,11 +28,17 @@ const inputBar = ({ messageInput }) => {
         messageInput(input)
         setInput("")
     }
+
     return (
         <div className='p-2 px-3'>
-            <form onSubmit={submit} className="px-3 p-2 border-0  rounded-full  bg-[#282638]  flex items-center">
-                <input name="input" value={input} onChange={(e) => setInput(e.target.value)} className="p-1 outline-0 text-white flex-1" placeholder="Type your message..." />
-                <button type="submit" className=" flex items-center justify-center rounded-full p-2 bg-white cursor-pointer">
+            <form onSubmit={submit} className="px-3 p-2 border-0  rounded-3xl  bg-[#282638]  flex items-center">
+                <textarea ref={inputarea}
+                    className="p-1 outline-0 text-white flex-1 resize-none overflow-y-auto max-h-26  custom-scroll"
+                    name="input" value={input}
+                    onChange={(e) => { setInput(e.target.value); handleChange(e); }}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Type your message..." />
+                <button type="submit" className=" flex items-center justify-center rounded-full p-2 bg-white cursor-pointer ml-1 self-end-safe">
                     <svg className='h-5 fill-black' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                         <path d="M568.4 37.7C578.2 34.2 589 36.7 596.4 44C603.8 51.3 606.2 62.2 602.7 72L424.7 568.9C419.7 582.8 406.6 592 391.9 592C377.7 592 364.9 583.4 359.6 570.3L295.4 412.3C290.9 401.3 292.9 388.7 300.6 379.7L395.1 267.3C400.2 261.2 399.8 252.3 394.2 246.7C388.6 241.1 379.6 240.7 373.6 245.8L261.2 340.1C252.1 347.7 239.6 349.7 228.6 345.3L70.1 280.8C57 275.5 48.4 262.7 48.4 248.5C48.4 233.8 57.6 220.7 71.5 215.7L568.4 37.7z" />
                     </svg>
