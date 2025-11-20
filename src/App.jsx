@@ -37,7 +37,7 @@ function App() {
           "Authorization": `Bearer ${import.meta.env.VITE_API_SECRET_KEY}`,
         },
         body: JSON.stringify({
-          model: "openai/gpt-oss-20b:free",
+          model: "deepseek/deepseek-r1-distill-llama-70b:free",
           messages: updatedMessages,
         }),
       });
@@ -72,16 +72,16 @@ function App() {
         {messages.map((msg, i) => (
           <div className={`message ${msg.role === "user" ? "user" : "ai"}`} key={i}>
             <div className={`messagebubble ${msg.role === "user" ? "user" : "ai"}`}>
-              <p>{msg.content.replace(/<\｜begin▁of▁sentence｜>/g, "")
+              <pre className="whitespace-pre-wrap">{msg.content.replace(/<\｜begin▁of▁sentence｜>/g, "")
                 .replace(/<\|endoftext\|>/g, "")
-                .replace(/\s+/g, " ")
+                // .replace(/\s+/g, " ")
                 .replace(/###\s*/g, "\n\n")
-                .replace(/\*\*\*(.*?)\*\*\*/g, "\n\n$1\n")
-                .replace(/\*\*(.*?)\*\*/g, "\n$1\n")
-                .replace(/\*\s*\*\s*\*\s*/g, "\n")
-                .replace(/\*\s*(.*?)\s*:/g, "\n• $1:")
-                .replace(/([.!?])\s+/g, "$1\n")
-                .trim()}</p>
+                // .replace(/\*\*\*(.*?)\*\*\*/g, "\n\n$1\n")
+                .replace(/\*\*(.*?)\*\*/g, " $1 ")
+                // .replace(/\*\s*\*\s*\*\s*/g, "\n")
+                // .replace(/\*\s*(.*?)\s*:/g, "\n• $1:")
+                // .replace(/([.!?])\s+/g, "$1\n")
+                .trim()}</pre>
             </div>
           </div>
         ))}
